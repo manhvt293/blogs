@@ -6,6 +6,9 @@ class Template extends Component {
         this.props.doDeleteItem(this.props.id);
         this.props.changeAlertShowStatus("Delete success !");
     }
+    onClickEditItem = () => {
+        this.props.changeEditStatus();
+    }
     render() {
         return (
             <tr>
@@ -13,7 +16,7 @@ class Template extends Component {
                 <td>{this.props.title}</td>
                 <td>{this.props.content}</td>
                 <td>
-                    <button type="button" className="btn btn-info mr-1">Edit</button>
+                    <button type="button" onClick={() => this.onClickEditItem()} className="btn btn-info mr-1">Edit</button>
                     <button type="button" onClick={() => this.handleDeleteItem()} className="btn btn-danger">Delete</button>
                 </td>
             </tr>
@@ -36,6 +39,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         changeAlertShowStatus: (titleAlert) => {
             dispatch({
                 type: "CHANGE_ALERT_SHOW_STAUS", titleAlert
+            })
+        },
+        changeEditStatus: () => {
+            dispatch({
+                type: "CHANGE_EDIT_STAUS"
             })
         }
     }

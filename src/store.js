@@ -21,6 +21,8 @@ const newReducer = (state = newInitialState, action) => {
 
         case "CHANGE_CREATE_STAUS":
             return {...state, isCreate: !state.isCreate }
+        case "CHANGE_EDIT_STAUS":
+            return {...state, isEdit: !state.isEdit }
         case "ADD_ITEM_NEW":
             callApi("news", "POST", action.itemNew)
             return state

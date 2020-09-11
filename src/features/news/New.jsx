@@ -3,6 +3,7 @@ import callApi from './../../api/axiosClient';
 import FormAdd from './FormAdd';
 import Template from './Template';
 import { connect } from 'react-redux';
+import FormEdit from './FormEdit';
 
 class New extends Component {
     constructor(props) {
@@ -31,7 +32,6 @@ class New extends Component {
     }
 
     showDataNew = () => {
-        console.log('xxx', this.state.dataNews);
         return this.state.dataNews.map((value, key) => {
             return (
                 <Template
@@ -46,6 +46,10 @@ class New extends Component {
     showForm = () => {
         if (this.props.isCreate) {
             return <FormAdd />
+        }
+
+        if (this.props.isEdit) {
+            return <FormEdit />
         }
     }
     render() {
@@ -71,6 +75,7 @@ class New extends Component {
                             </thead>
                             <tbody>
                                 {this.showDataNew()}
+
                             </tbody>
                         </table>
                     </div>
@@ -82,7 +87,8 @@ class New extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
     return {
-        isCreate: state.isCreate
+        isCreate: state.isCreate,
+        isEdit: state.FormEdit
     }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
