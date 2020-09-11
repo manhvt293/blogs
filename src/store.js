@@ -7,28 +7,26 @@ const newInitialState = {
     isAlertShow: false,
     titleAlert: "",
     dataEdit: {},
-    //dataNews: []
 }
 
 const newReducer = (state = newInitialState, action) => {
     switch (action.type) {
-        // case "ALL_ITEM":
-        //     callApi("news", "get", null)
-        //         .then(res => {
-        //             return {...state, dataNews: res.data }
-        //         })
-        //     return state
-
         case "CHANGE_CREATE_STAUS":
             return {...state, isCreate: !state.isCreate }
-        case "CHANGE_EDIT_STAUS":
-            return {...state, isEdit: !state.isEdit }
         case "ADD_ITEM_NEW":
             callApi("news", "POST", action.itemNew)
             return state
+
+        case "CHANGE_EDIT_STAUS":
+            return {...state, isEdit: !state.isEdit }
+        case "GET_DATA_EDIT":
+            console.log(action.dataEdit);
+            return {...state, dataEdit: action.dataEdit }
+
         case "DELETE_ITEM":
             callApi(`news/${action.id}`, "DELETE", action.id)
             return state
+
         case "CHANGE_ALERT_HIDE_STAUS":
             return {...state, isAlertShow: false }
         case "CHANGE_ALERT_SHOW_STAUS":

@@ -39,6 +39,7 @@ class New extends Component {
                     id={value.id_news}
                     title={value.title}
                     content={value.content}
+                    data={value}
                 />
             )
         })

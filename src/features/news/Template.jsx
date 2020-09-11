@@ -8,6 +8,7 @@ class Template extends Component {
     }
     onClickEditItem = () => {
         this.props.changeEditStatus();
+        this.props.getDataEdit(this.props.data);
     }
     render() {
         return (
@@ -44,6 +45,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         changeEditStatus: () => {
             dispatch({
                 type: "CHANGE_EDIT_STAUS"
+            })
+        },
+        getDataEdit: (dataEdit) => {
+            dispatch({
+                type: "GET_DATA_EDIT", dataEdit
             })
         }
     }

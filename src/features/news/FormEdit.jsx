@@ -1,7 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 FormEdit.propTypes = {
-
+    dataEdit: PropTypes.shape({
+        id_news: PropTypes.number,
+        title: PropTypes.string,
+        content: PropTypes.string,
+        image: PropTypes.string,
+        addtime: PropTypes.string
+    }),
 };
 
 function FormEdit(props) {
@@ -15,7 +22,7 @@ function FormEdit(props) {
             <form>
                 <div className="form-group">
                     <label htmlFor="Tille">Tille</label>
-                    <input type="text" name="title" className="form-control" placeholder="Enter title" />
+                    <input defaultValue={this.props.title} type="text" name="title" className="form-control" placeholder="Enter title" />
                 </div>
                 <div className="form-group">
                     <label htmlFor="Tille">Content</label>
