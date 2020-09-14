@@ -9,7 +9,6 @@ class Template extends Component {
     onClickEditItem = () => {
         this.props.changeEditStatus();
         this.props.getDataEdit(this.props.data);
-        this.props.doEditItem();
     }
     render() {
         return (

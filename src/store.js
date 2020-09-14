@@ -1,4 +1,3 @@
-import callApi from './api/axiosClient';
 var redux = require("redux");
 
 const newInitialState = {
@@ -18,9 +17,6 @@ const newReducer = (state = newInitialState, action) => {
             return {...state, isEdit: !state.isEdit }
         case "GET_DATA_EDIT":
             return {...state, dataEdit: action.dataEdit }
-        case "EDIT_ITEM":
-            callApi(`news/${action.dataEdit.id_news}`, "PUT", action.dataEdit)
-            return state
 
         case "CHANGE_ALERT_HIDE_STAUS":
             return {...state, isAlertShow: false }

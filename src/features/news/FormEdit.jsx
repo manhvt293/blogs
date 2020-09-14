@@ -10,8 +10,12 @@ FormEdit.propTypes = {
         image: PropTypes.string,
         addtime: PropTypes.number
     }),
-
+    doEditItem: PropTypes.func,
 };
+
+FormEdit.defaultProps = {
+    doEditItem: null,
+}
 
 function FormEdit(props) {
     const { title, content, id_news } = props.dataEdit;
@@ -37,8 +41,9 @@ function FormEdit(props) {
             content: value.content,
             id_news: value.id_news
         }
-
-        props.handleEditItem(dataNew);
+        if (props.doEditItem) {
+            props.doEditItem(dataNew);
+        }
     }
 
     return (

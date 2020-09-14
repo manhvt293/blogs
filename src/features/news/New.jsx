@@ -41,7 +41,6 @@ class New extends Component {
                     content={value.content}
                     data={value}
                     doDeleteItem={(id) => this.handleDeleteItem(id)}
-                    doEditItem={(dataEditNew) => this.handleEditItem(dataEditNew)}
                 />
             )
         })
@@ -85,9 +84,23 @@ class New extends Component {
 
     handleEditItem = (itemNew) => {
         this.isComponentDidMount = true;
-
+        callApi(`news/${itemNew.id_news}`, "put", itemNew)
+            .then(res => {
+                if (this.isComponentDidMount) {
+                    var items = this.state.dataNews;
+                    items.forEach((value, name) => {
+                        if (value.id_news === res.data.id_news) {
+                            value.title = res.data.title;
+                            value.content = res.data.content;
+                        }
+                    })
+                    this.setState({
+                        dataNews: items
+                    });
+                }
+            })
         this.props.changeAlertShowStatus("Edit new success !");
-        //this.props.changeEditStatus();
+        this.props.changeEditStatus();
     }
 
     findIndex = (dataNews, id) => {
@@ -106,7 +119,7 @@ class New extends Component {
         }
 
         if (this.props.isEdit) {
-            return <FormEdit />
+            return <FormEdit doEditItem={(itemNew) => this.handleEditItem(itemNew)} />
         }
     }
     render() {
