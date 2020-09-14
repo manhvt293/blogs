@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Template extends Component {
-    handleDeleteItem = () => {
+    onClickDeleteItem = () => {
+        console.log("21331");
         this.props.doDeleteItem(this.props.id);
-        this.props.changeAlertShowStatus("Delete success !");
     }
     onClickEditItem = () => {
         this.props.changeEditStatus();
         this.props.getDataEdit(this.props.data);
+        this.props.doEditItem();
     }
     render() {
         return (
@@ -18,9 +19,9 @@ class Template extends Component {
                 <td>{this.props.content}</td>
                 <td>
                     <button type="button" onClick={() => this.onClickEditItem()} className="btn btn-info mr-1">Edit</button>
-                    <button type="button" onClick={() => this.handleDeleteItem()} className="btn btn-danger">Delete</button>
+                    <button type="button" onClick={() => this.onClickDeleteItem()} className="btn btn-danger">Delete</button>
                 </td>
-            </tr>
+            </tr >
         );
     }
 }
@@ -31,17 +32,6 @@ const mapStateToProps = (state, ownProps) => {
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        doDeleteItem: (id) => {
-            dispatch({
-                type: "DELETE_ITEM",
-                id
-            })
-        },
-        changeAlertShowStatus: (titleAlert) => {
-            dispatch({
-                type: "CHANGE_ALERT_SHOW_STAUS", titleAlert
-            })
-        },
         changeEditStatus: () => {
             dispatch({
                 type: "CHANGE_EDIT_STAUS"

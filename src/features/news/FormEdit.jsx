@@ -10,6 +10,7 @@ FormEdit.propTypes = {
         image: PropTypes.string,
         addtime: PropTypes.number
     }),
+
 };
 
 function FormEdit(props) {
@@ -38,9 +39,6 @@ function FormEdit(props) {
         }
 
         props.handleEditItem(dataNew);
-        props.changeAlertShowStatus("Edit new success !");
-        props.changeEditStatus();
-        props.changeDataStatus();
     }
 
     return (
@@ -69,29 +67,5 @@ const mapStateToProps = (state, ownProps) => {
         dataEdit: state.dataEdit
     }
 }
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        handleEditItem: (dataEdit) => {
-            dispatch({
-                type: "EDIT_ITEM",
-                dataEdit
-            })
-        },
-        changeAlertShowStatus: (titleAlert) => {
-            dispatch({
-                type: "CHANGE_ALERT_SHOW_STAUS", titleAlert
-            })
-        },
-        changeEditStatus: () => {
-            dispatch({
-                type: "CHANGE_EDIT_STAUS"
-            })
-        },
-        changeDataStatus: () => {
-            dispatch({
-                type: "CHANGE_DATA_STAUS"
-            })
-        }
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(FormEdit);
+
+export default connect(mapStateToProps)(FormEdit);

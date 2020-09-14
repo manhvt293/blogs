@@ -23,17 +23,12 @@ class New extends Component {
                         dataNews: res.data,
                     });
                 }
-            })
+            });
     }
 
     componentDidMount() {
         this.isComponentDidMount = true;
         this.allNews();
-        this.props.getAllData();
-    }
-
-    componentWillUnmount() {
-
     }
 
     showDataNew = () => {
@@ -45,14 +40,69 @@ class New extends Component {
                     title={value.title}
                     content={value.content}
                     data={value}
+                    doDeleteItem={(id) => this.handleDeleteItem(id)}
+                    doEditItem={(dataEditNew) => this.handleEditItem(dataEditNew)}
                 />
             )
         })
+
+    }
+
+    handleDeleteItem = (id) => {
+        this.isComponentDidMount = true;
+        callApi(`news/${id}`, "DELETE", id)
+            .then(res => {
+                if (this.isComponentDidMount) {
+                    var items = this.state.dataNews;
+                    var index = this.findIndex(items, id);
+                    if (index !== -1) {
+                        items.splice(index, 1)
+                        this.setState({
+                            dataNews: items
+                        });
+                    }
+
+                }
+            })
+        this.props.changeAlertShowStatus("Delete success !");
+    }
+
+    handleCreateItem = (itemNew) => {
+        this.isComponentDidMount = true;
+        callApi("news", "POST", itemNew)
+            .then(res => {
+                if (this.isComponentDidMount) {
+                    var items = this.state.dataNews;
+                    items.push(res.data);
+                    this.setState({
+                        dataNews: items
+                    });
+                }
+            });
+        this.props.changeCreateStatus();
+        this.props.changeAlertShowStatus("Add new success !");
+    }
+
+    handleEditItem = (itemNew) => {
+        this.isComponentDidMount = true;
+
+        this.props.changeAlertShowStatus("Edit new success !");
+        //this.props.changeEditStatus();
+    }
+
+    findIndex = (dataNews, id) => {
+        var result = -1;
+        dataNews.forEach((dataNew, index) => {
+            if (dataNew.id_news === id) {
+                result = index;
+            }
+        });
+        return result;
     }
 
     showForm = () => {
         if (this.props.isCreate) {
-            return <FormAdd />
+            return <FormAdd doCreateItem={(itemNew) => this.handleCreateItem(itemNew)} />
         }
 
         if (this.props.isEdit) {
@@ -108,14 +158,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                 type: "CHANGE_CREATE_STAUS"
             })
         },
-        changeDataStatus: () => {
+
+        changeEditStatus: () => {
             dispatch({
-                type: "CHANGE_DATA_STAUS"
+                type: "CHANGE_EDIT_STAUS"
             })
         },
-        getAllData: () => {
+
+        changeAlertShowStatus: (titleAlert) => {
             dispatch({
-                type: "GET_ALL"
+                type: "CHANGE_ALERT_SHOW_STAUS", titleAlert
             })
         }
 

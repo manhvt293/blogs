@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
 
 class FormAdd extends Component {
     constructor(props) {
@@ -26,8 +24,6 @@ class FormAdd extends Component {
         itemNew.title = title;
         itemNew.content = content;
         this.props.doCreateItem(itemNew);
-        this.props.changeCreateStatus();
-        this.props.changeAlertShowStatus("Add new success !");
     }
     render() {
         return (
@@ -52,28 +48,5 @@ class FormAdd extends Component {
         );
     }
 }
-const mapStateToProps = (state, ownProps) => {
-    return {
-        prop: state.prop
-    }
-}
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        doCreateItem: (itemNew) => {
-            dispatch({
-                type: "ADD_ITEM_NEW", itemNew
-            })
-        },
-        changeCreateStatus: () => {
-            dispatch({
-                type: "CHANGE_CREATE_STAUS"
-            })
-        },
-        changeAlertShowStatus: (titleAlert) => {
-            dispatch({
-                type: "CHANGE_ALERT_SHOW_STAUS", titleAlert
-            })
-        }
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(FormAdd);
+
+export default FormAdd;

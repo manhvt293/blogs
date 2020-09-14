@@ -5,21 +5,14 @@ const newInitialState = {
     isEdit: false,
     isCreate: false,
     isAlertShow: false,
-    isRefresh: false,
     titleAlert: "",
     dataEdit: {},
 }
 
 const newReducer = (state = newInitialState, action) => {
     switch (action.type) {
-        case "CHANGE_DATA_STAUS":
-            return {...state, isRefresh: !state.isRefresh }
-
         case "CHANGE_CREATE_STAUS":
             return {...state, isCreate: !state.isCreate }
-        case "ADD_ITEM_NEW":
-            callApi("news", "POST", action.itemNew)
-            return state
 
         case "CHANGE_EDIT_STAUS":
             return {...state, isEdit: !state.isEdit }
@@ -27,10 +20,6 @@ const newReducer = (state = newInitialState, action) => {
             return {...state, dataEdit: action.dataEdit }
         case "EDIT_ITEM":
             callApi(`news/${action.dataEdit.id_news}`, "PUT", action.dataEdit)
-            return state
-
-        case "DELETE_ITEM":
-            callApi(`news/${action.id}`, "DELETE", action.id)
             return state
 
         case "CHANGE_ALERT_HIDE_STAUS":
