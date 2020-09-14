@@ -5,12 +5,16 @@ const newInitialState = {
     isEdit: false,
     isCreate: false,
     isAlertShow: false,
+    isRefresh: false,
     titleAlert: "",
     dataEdit: {},
 }
 
 const newReducer = (state = newInitialState, action) => {
     switch (action.type) {
+        case "CHANGE_DATA_STAUS":
+            return {...state, isRefresh: !state.isRefresh }
+
         case "CHANGE_CREATE_STAUS":
             return {...state, isCreate: !state.isCreate }
         case "ADD_ITEM_NEW":
@@ -20,8 +24,10 @@ const newReducer = (state = newInitialState, action) => {
         case "CHANGE_EDIT_STAUS":
             return {...state, isEdit: !state.isEdit }
         case "GET_DATA_EDIT":
-            console.log(action.dataEdit);
             return {...state, dataEdit: action.dataEdit }
+        case "EDIT_ITEM":
+            callApi(`news/${action.dataEdit.id_news}`, "PUT", action.dataEdit)
+            return state
 
         case "DELETE_ITEM":
             callApi(`news/${action.id}`, "DELETE", action.id)
@@ -31,12 +37,13 @@ const newReducer = (state = newInitialState, action) => {
             return {...state, isAlertShow: false }
         case "CHANGE_ALERT_SHOW_STAUS":
             return {...state, isAlertShow: true, titleAlert: action.titleAlert }
+
         default:
             return state
     }
 }
 var store = redux.createStore(newReducer);
 store.subscribe(() => {
-    console.log(JSON.stringify(store.getState()));
+    //console.log(JSON.stringify(store.getState()));
 })
 export default store;

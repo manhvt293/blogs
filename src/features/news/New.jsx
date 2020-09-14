@@ -29,6 +29,11 @@ class New extends Component {
     componentDidMount() {
         this.isComponentDidMount = true;
         this.allNews();
+        this.props.getAllData();
+    }
+
+    componentWillUnmount() {
+
     }
 
     showDataNew = () => {
@@ -44,6 +49,7 @@ class New extends Component {
             )
         })
     }
+
     showForm = () => {
         if (this.props.isCreate) {
             return <FormAdd />
@@ -54,7 +60,8 @@ class New extends Component {
         }
     }
     render() {
-        //this.allNews()
+
+        console.log("render");
         return (
             <div className="container">
                 <div className="row">
@@ -89,7 +96,9 @@ class New extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         isCreate: state.isCreate,
-        isEdit: state.FormEdit
+        isEdit: state.isEdit,
+        isRefresh: state.isRefresh,
+        dataNews1: state.dataNews1
     }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -98,7 +107,18 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             dispatch({
                 type: "CHANGE_CREATE_STAUS"
             })
+        },
+        changeDataStatus: () => {
+            dispatch({
+                type: "CHANGE_DATA_STAUS"
+            })
+        },
+        getAllData: () => {
+            dispatch({
+                type: "GET_ALL"
+            })
         }
+
     }
 }
 

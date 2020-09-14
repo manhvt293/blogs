@@ -1,17 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 FormEdit.propTypes = {
     dataEdit: PropTypes.shape({
-        id_news: PropTypes.number,
+        id_news: PropTypes.string,
         title: PropTypes.string,
         content: PropTypes.string,
         image: PropTypes.string,
-        addtime: PropTypes.string
+        addtime: PropTypes.number
     }),
 };
 
 function FormEdit(props) {
+    const { title, content, id_news } = props.dataEdit;
+    const [value, setValue] = useState({
+        id_news: id_news,
+        title: title,
+        content: content
+    });
+
+    const isChange = (event) => {
+        const nameInput = event.target.name;
+        const valueInput = event.target.value;
+
+        setValue({
+            ...value,
+            [nameInput]: valueInput
+        });
+    }
+
+    const onSubmitEditItem = () => {
+        const dataNew = {
+            title: value.title,
+            content: value.content,
+            id_news: value.id_news
+        }
+
+        props.handleEditItem(dataNew);
+        props.changeAlertShowStatus("Edit new success !");
+        props.changeEditStatus();
+        props.changeDataStatus();
+    }
+
     return (
         <div className="col-4">
             <div className="page-header">
@@ -22,16 +53,45 @@ function FormEdit(props) {
             <form>
                 <div className="form-group">
                     <label htmlFor="Tille">Tille</label>
-                    <input defaultValue={this.props.title} type="text" name="title" className="form-control" placeholder="Enter title" />
+                    <input defaultValue={title} onChange={(event) => isChange(event)} type="text" name="title" className="form-control" placeholder="Enter title" />
                 </div>
                 <div className="form-group">
                     <label htmlFor="Tille">Content</label>
-                    <textarea className="form-control" name="content" rows="3"></textarea>
+                    <textarea onChange={(event) => isChange(event)} defaultValue={content} className="form-control" name="content" rows="3"></textarea>
                 </div>
-                <button type="reset" className="btn btn-primary">Save</button>
+                <button type="reset" onClick={onSubmitEditItem} className="btn btn-primary">Save</button>
             </form>
         </div>
     );
 }
-
-export default FormEdit;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        dataEdit: state.dataEdit
+    }
+}
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        handleEditItem: (dataEdit) => {
+            dispatch({
+                type: "EDIT_ITEM",
+                dataEdit
+            })
+        },
+        changeAlertShowStatus: (titleAlert) => {
+            dispatch({
+                type: "CHANGE_ALERT_SHOW_STAUS", titleAlert
+            })
+        },
+        changeEditStatus: () => {
+            dispatch({
+                type: "CHANGE_EDIT_STAUS"
+            })
+        },
+        changeDataStatus: () => {
+            dispatch({
+                type: "CHANGE_DATA_STAUS"
+            })
+        }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(FormEdit);
