@@ -40,11 +40,11 @@ class EditItem extends Component {
         <form>
           <div className="form-group">
             <label htmlFor="userName">UserName</label>
-            <input onChange={(event) => this.isChange(event)} defaultValue={this.props.dataEdit.username} type="text" className="form-control" name="userName" id="userName" placeholder="Enter UserName" />
+            <input disabled defaultValue={this.props.dataEdit.username} type="text" className="form-control" name="userName" id="userName" placeholder="Enter UserName" />
           </div>
           <div className="form-group">
             <label htmlFor="email">Email</label>
-            <input onChange={(event) => this.isChange(event)} defaultValue={this.props.dataEdit.email} type="text" className="form-control" name="email" id="email" placeholder="Enter Email" />
+            <input disabled defaultValue={this.props.dataEdit.email} type="text" className="form-control" name="email" id="email" placeholder="Enter Email" />
           </div>
           <div className="form-group">
             <label htmlFor="fullName">FullName</label>

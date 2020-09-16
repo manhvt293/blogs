@@ -131,8 +131,28 @@ class User extends Component {
     this.isComponentDidMount = false;
   }
 
+  doHandleAtiveItem = (id, status) => {
+    console.log(status);
+    callApi(`users/${id}`, "put", { status: !status })
+      .then(res => {
+        if (this.isComponentDidMount) {
+          var items = this.state.dataUser;
+          items.forEach((value, name) => {
+            if (value.id_user === res.data.id_user) {
+              value.status = res.data.status;
+            }
+          })
+          this.setState({
+            dataUser: items
+          });
+        }
+      })
+  }
+
   getData = () => {
+
     return this.state.dataUser.map((value, key) => {
+      let textActive = value.status.toString() === "true" ? "Enable" : "Disable";
       return (
         <Template
           editItem={(data) => this.editItem(value)}
@@ -142,6 +162,8 @@ class User extends Component {
           email={value.email}
           name={value.name}
           username={value.username}
+          textActive={textActive}
+          handleAtiveItem={(id, status) => this.doHandleAtiveItem(value.id_user, value.status)}
         />
       )
     })

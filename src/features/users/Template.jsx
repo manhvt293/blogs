@@ -10,7 +10,8 @@ class Template extends Component {
                 <td>{this.props.name}</td>
                 <td>
                     <button type="button" onClick={() => this.props.editItem()} className="btn btn-primary mr-1">Edit</button>
-                    <button type="button" onClick={() => this.props.handleDeleteItem()} className="btn btn-danger">Delete</button>
+                    <button type="button " onClick={() => this.props.handleDeleteItem()} className="d-none btn btn-danger mr-1">Delete</button>
+                    <button type="button" onClick={() => this.props.handleAtiveItem()} className="btn btn-danger">{this.props.textActive}</button>
                 </td>
             </tr>
         );
