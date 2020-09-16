@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import './App.css';
-import New from './features/news/New';
-import Nav from './features/layouts/Nav';
+import { BrowserRouter as Router } from "react-router-dom";
 import AlertInfo from './alert/AlertInfo';
+import './App.css';
+import Nav from './features/layouts/Nav';
+import RouterUrl from './router/RouterUrl';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <AlertInfo />
-        <Nav />
-        <New />
+        <Router>
+          <AlertInfo />
+          <Nav />
+          <RouterUrl />
+        </Router>
       </div>
     );
   }

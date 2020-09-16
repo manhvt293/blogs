@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Template from './Template';
 import CreateItem from './CreateItem';
-import callApi from './../../../utils/callApi';
+import callApi from './../../api/axiosClient';
 import EditItem from './EditItem';
 
-class ManagerUser extends Component {
+class User extends Component {
   constructor(props) {
     super(props);
     this.isComponentDidMount = false;
@@ -22,7 +22,7 @@ class ManagerUser extends Component {
     itemUser.username = item.userName;
     itemUser.name = item.fullName;
     itemUser.email = item.email;
-    console.log(itemUser);
+
     callApi("users", "post", itemUser)
       .then(res => {
         if (this.isComponentDidMount) {
@@ -33,6 +33,9 @@ class ManagerUser extends Component {
           });
         }
       })
+    this.setState({
+      isStatusCreate: !this.state.isStatusCreate
+    });
   }
 
   doEditItem = (item) => {
@@ -46,7 +49,7 @@ class ManagerUser extends Component {
         if (this.isComponentDidMount) {
           var items = this.state.dataUser;
           items.forEach((value, name) => {
-            if (value.id === res.data.id) {
+            if (value.id_user === res.data.id_user) {
               value.name = res.data.name;
               value.username = res.data.username;
               value.email = res.data.email;
@@ -94,6 +97,7 @@ class ManagerUser extends Component {
         }
       })
   }
+
   doHandleDeleteItem = (id) => {
     this.isComponentDidMount = true;
     callApi(`users/${id}`, "delete", id)
@@ -117,7 +121,7 @@ class ManagerUser extends Component {
   findIndex = (dataUsers, id) => {
     var result = -1;
     dataUsers.forEach((dataUser, index) => {
-      if (dataUser.id === id) {
+      if (dataUser.id_user === id) {
         result = index;
       }
     });
@@ -132,9 +136,9 @@ class ManagerUser extends Component {
       return (
         <Template
           editItem={(data) => this.editItem(value)}
-          handleDeleteItem={(id) => this.doHandleDeleteItem(value.id)}
+          handleDeleteItem={(id) => this.doHandleDeleteItem(value.id_user)}
           key={key}
-          id={value.id}
+          id={value.id_user}
           email={value.email}
           name={value.name}
           username={value.username}
@@ -152,46 +156,6 @@ class ManagerUser extends Component {
   render() {
     return (
       <div>
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <a className="navbar-brand" href="#">Navbar</a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span className="navbar-toggler-icon" />
-                </button>
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
-                      <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#">Link</a>
-                    </li>
-                    <li className="nav-item dropdown">
-                      <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                          </a>
-                      <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a className="dropdown-item" href="#">Action</a>
-                        <a className="dropdown-item" href="#">Another action</a>
-                        <div className="dropdown-divider" />
-                        <a className="dropdown-item" href="#">Something else here</a>
-                      </div>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link disabled" href="#">Disabled</a>
-                    </li>
-                  </ul>
-                  <form className="form-inline my-2 my-lg-0">
-                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                  </form>
-                </div>
-              </nav>
-            </div>
-          </div>
-        </div>
         <div className="container">
           <div className="row">
             <div className="col">
@@ -223,4 +187,4 @@ class ManagerUser extends Component {
   }
 }
 
-export default ManagerUser;
+export default User;
